@@ -1,0 +1,37 @@
+syntax = "proto3";
+option go_package = "github.com/IsmaelNicolas/Library_System/stock";
+
+package inventory;
+
+import "stand.proto";
+import "book.proto";
+
+message Stock {
+    uint64 id = 1;
+    inventory.Book book = 2;
+    inventory.Stand stand = 3; // Utiliza inventory.Stand importado de stand.proto
+    int32 quantity = 4;
+    int32 stock_min = 5;
+}
+
+service StockService {
+    rpc CreateStock(CreateStockRequest) returns (StockResponse);
+    rpc ReadStocks(ReadStocksRequest) returns (ReadStocksResponse);
+}
+
+message CreateStockRequest {
+    inventory.Book book_id = 1;
+    inventory.Stand stand = 2; // Utiliza inventory.Stand importado de stand.proto
+    int32 quantity = 3;
+    int32 stock_min = 4;
+}
+
+message StockResponse {
+    Stock stock = 1;
+}
+
+message ReadStocksRequest {}
+
+message ReadStocksResponse {
+    repeated Stock stocks = 1;
+}

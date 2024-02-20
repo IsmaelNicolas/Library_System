@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v4.25.1
-// source: books.proto
+// source: book.proto
 
-package books
+package book
 
 import (
 	context "context"
@@ -19,10 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	BookService_CreateBook_FullMethodName     = "/book.BookService/CreateBook"
-	BookService_ReadBooks_FullMethodName      = "/book.BookService/ReadBooks"
-	BookService_ReadBookById_FullMethodName   = "/book.BookService/ReadBookById"
-	BookService_UpdateBookById_FullMethodName = "/book.BookService/UpdateBookById"
+	BookService_CreateBook_FullMethodName     = "/inventory.BookService/CreateBook"
+	BookService_ReadBooks_FullMethodName      = "/inventory.BookService/ReadBooks"
+	BookService_ReadBookById_FullMethodName   = "/inventory.BookService/ReadBookById"
+	BookService_UpdateBookById_FullMethodName = "/inventory.BookService/UpdateBookById"
 )
 
 // BookServiceClient is the client API for BookService service.
@@ -80,17 +80,16 @@ func (c *bookServiceClient) UpdateBookById(ctx context.Context, in *UpdateBookBy
 }
 
 // BookServiceServer is the server API for BookService service.
-// All implementations must embed UnimplementedBookServiceServer
+// All implementations should embed UnimplementedBookServiceServer
 // for forward compatibility
 type BookServiceServer interface {
 	CreateBook(context.Context, *CreateBookRequest) (*BookResponse, error)
 	ReadBooks(context.Context, *ReadBooksRequest) (*ReadBooksResponse, error)
 	ReadBookById(context.Context, *ReadBookByIdRequest) (*BookResponse, error)
 	UpdateBookById(context.Context, *UpdateBookByIdRequest) (*BookResponse, error)
-	mustEmbedUnimplementedBookServiceServer()
 }
 
-// UnimplementedBookServiceServer must be embedded to have forward compatible implementations.
+// UnimplementedBookServiceServer should be embedded to have forward compatible implementations.
 type UnimplementedBookServiceServer struct {
 }
 
@@ -106,7 +105,6 @@ func (UnimplementedBookServiceServer) ReadBookById(context.Context, *ReadBookByI
 func (UnimplementedBookServiceServer) UpdateBookById(context.Context, *UpdateBookByIdRequest) (*BookResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateBookById not implemented")
 }
-func (UnimplementedBookServiceServer) mustEmbedUnimplementedBookServiceServer() {}
 
 // UnsafeBookServiceServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to BookServiceServer will
@@ -195,7 +193,7 @@ func _BookService_UpdateBookById_Handler(srv interface{}, ctx context.Context, d
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var BookService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "book.BookService",
+	ServiceName: "inventory.BookService",
 	HandlerType: (*BookServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -216,5 +214,5 @@ var BookService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "books.proto",
+	Metadata: "book.proto",
 }

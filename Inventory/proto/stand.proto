@@ -1,0 +1,31 @@
+syntax = "proto3";
+option go_package = "github.com/IsmaelNicolas/Library_System/stand";
+
+package inventory;
+
+service StandService {
+    rpc CreateStand(CreateStandRequest) returns (StandResponse);
+    rpc ReadStands(ReadStandsRequest) returns (ReadStandsResponse); // Nuevo método para leer stands
+}
+
+message Stand {
+    uint64 id = 1;
+    string name = 2;
+    string location = 3;
+}
+
+message CreateStandRequest {
+    string name = 1;
+    string location = 2;
+}
+
+message StandResponse {
+    Stand stand = 1;
+}
+
+// Mensajes y respuestas para leer los stands
+message ReadStandsRequest {}
+
+message ReadStandsResponse {
+    repeated Stand stands = 1;
+}

@@ -1,7 +1,9 @@
 syntax = "proto3";
-option go_package = "github.com/IsmaelNicolas/Library_System/books";
+option go_package = "github.com/IsmaelNicolas/Library_System/book";
 
-package book;
+package inventory;
+
+import "author.proto";
 
 service BookService {
     rpc CreateBook(CreateBookRequest) returns (BookResponse);
@@ -14,13 +16,13 @@ message Book {
     uint64 id = 1;
     string title = 2;
     int32 year = 3;
-    uint64 author_id = 4;
+    inventory.Author author = 4;
 }
 
 message CreateBookRequest {
     string title = 1;
     int32 year = 2;
-    uint64 author_id = 3;
+    inventory.Author author = 3;
 }
 
 message ReadBooksRequest {}
@@ -37,7 +39,7 @@ message UpdateBookByIdRequest {
     uint64 id = 1;
     string title = 2;
     int32 year = 3;
-    uint64 author_id = 4;
+    inventory.Author author = 4;
 }
 
 message BookResponse {

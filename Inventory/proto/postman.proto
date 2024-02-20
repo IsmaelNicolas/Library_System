@@ -1,0 +1,128 @@
+syntax = "proto3";
+// option go_package = "github.com/IsmaelNicolas/Library_System/author";
+
+package inventory;
+
+service AuthorService {
+    rpc CreateAuthor(CreateAuthorRequest) returns (AuthorResponse);
+    rpc ReadAuthors(ReadAuthorsRequest) returns (ReadAuthorsResponse);
+}
+
+message Author {
+    uint64 id = 1;
+    string full_name = 2;
+}
+
+message CreateAuthorRequest {
+    string full_name = 1;
+}
+
+message ReadAuthorsRequest {}
+
+message ReadAuthorsResponse {
+    repeated Author authors = 1;
+}
+
+message AuthorResponse {
+    Author author = 1;
+}
+
+
+service BookService {
+    rpc CreateBook(CreateBookRequest) returns (BookResponse);
+    rpc ReadBooks(ReadBooksRequest) returns (ReadBooksResponse);
+    rpc ReadBookById(ReadBookByIdRequest) returns (BookResponse);
+    rpc UpdateBookById(UpdateBookByIdRequest) returns (BookResponse);
+}
+
+message Book {
+    uint64 id = 1;
+    string title = 2;
+    int32 year = 3;
+    inventory.Author author = 4;
+}
+
+message CreateBookRequest {
+    string title = 1;
+    int32 year = 2;
+    inventory.Author author = 3;
+}
+
+message ReadBooksRequest {}
+
+message ReadBooksResponse {
+    repeated Book books = 1;
+}
+
+message ReadBookByIdRequest {
+    uint64 id = 1;
+}
+
+message UpdateBookByIdRequest {
+    uint64 id = 1;
+    string title = 2;
+    int32 year = 3;
+    inventory.Author author = 4;
+}
+
+message BookResponse {
+    Book book = 1;
+}
+
+
+service StandService {
+    rpc CreateStand(CreateStandRequest) returns (StandResponse);
+    rpc ReadStands(ReadStandsRequest) returns (ReadStandsResponse); // Nuevo método para leer stands
+}
+
+message Stand {
+    uint64 id = 1;
+    string name = 2;
+    string location = 3;
+}
+
+message CreateStandRequest {
+    string name = 1;
+    string location = 2;
+}
+
+message StandResponse {
+    Stand stand = 1;
+}
+
+// Mensajes y respuestas para leer los stands
+message ReadStandsRequest {}
+
+message ReadStandsResponse {
+    repeated Stand stands = 1;
+}
+
+message Stock {
+    uint64 id = 1;
+    inventory.Book book = 2;
+    inventory.Stand stand = 3; // Utiliza inventory.Stand importado de stand.proto
+    int32 quantity = 4;
+    int32 stock_min = 5;
+}
+
+service StockService {
+    rpc CreateStock(CreateStockRequest) returns (StockResponse);
+    rpc ReadStocks(ReadStocksRequest) returns (ReadStocksResponse);
+}
+
+message CreateStockRequest {
+    inventory.Book book_id = 1;
+    inventory.Stand stand = 2; // Utiliza inventory.Stand importado de stand.proto
+    int32 quantity = 3;
+    int32 stock_min = 4;
+}
+
+message StockResponse {
+    Stock stock = 1;
+}
+
+message ReadStocksRequest {}
+
+message ReadStocksResponse {
+    repeated Stock stocks = 1;
+}
