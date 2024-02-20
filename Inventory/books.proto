@@ -1,0 +1,45 @@
+syntax = "proto3";
+option go_package = "github.com/IsmaelNicolas/Library_System/books";
+
+package book;
+
+service BookService {
+    rpc CreateBook(CreateBookRequest) returns (BookResponse);
+    rpc ReadBooks(ReadBooksRequest) returns (ReadBooksResponse);
+    rpc ReadBookById(ReadBookByIdRequest) returns (BookResponse);
+    rpc UpdateBookById(UpdateBookByIdRequest) returns (BookResponse);
+}
+
+message Book {
+    uint64 id = 1;
+    string title = 2;
+    int32 year = 3;
+    uint64 author_id = 4;
+}
+
+message CreateBookRequest {
+    string title = 1;
+    int32 year = 2;
+    uint64 author_id = 3;
+}
+
+message ReadBooksRequest {}
+
+message ReadBooksResponse {
+    repeated Book books = 1;
+}
+
+message ReadBookByIdRequest {
+    uint64 id = 1;
+}
+
+message UpdateBookByIdRequest {
+    uint64 id = 1;
+    string title = 2;
+    int32 year = 3;
+    uint64 author_id = 4;
+}
+
+message BookResponse {
+    Book book = 1;
+}
